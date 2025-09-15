@@ -6,7 +6,6 @@ Authors: Mario Carneiro
 import Lean.Util.Paths
 import Lean.Elab.Frontend
 import AstExport
-import Std.HashMap
 
 /-! # `lake exe ast-export` command
 
