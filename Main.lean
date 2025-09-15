@@ -6,6 +6,7 @@ Authors: Mario Carneiro
 import Lean.Util.Paths
 import Lean.Elab.Frontend
 import AstExport
+import Std.HashMap
 
 /-! # `lake exe ast-export` command
 
@@ -27,7 +28,7 @@ open Lean Elab Command Frontend
 open System (FilePath)
 variable (srcSearchPath : SearchPath) (pkg : Name) in
 partial def visit (mod : Name) :
-    StateT (HashMap Name (FilePath × Task (Except IO.Error Unit))) IO Unit := do
+    StateT (Std.HashMap Name (FilePath × Task (Except IO.Error Unit))) IO Unit := do
   if !pkg.isPrefixOf mod || (← get).contains mod then return
   let some fileName ← srcSearchPath.findModuleWithExt "lean" mod
       | throw <| .userError s!"{mod} not found"
