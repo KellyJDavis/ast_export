@@ -77,7 +77,9 @@ partial def getASTForModule (srcSearchPath : SearchPath) (mainModuleName : Name)
       Command.elabCommandTopLevel cmd
       let mut msgs := (← get).messages
       modify ({ · with messages := initMsgs ++ msgs })
-      pure <| commands.push ⟨cmd⟩
+      let originalCmd := cmd
+      Command.elabCommandTopLevel cmd
+      pure <| commands.push ⟨originalCmd⟩
     if Parser.isTerminalCommand cmd then return commands
     processCommands edits
   let (commands, _) ← (processCommands #[]).run { inputCtx := inputCtx }
